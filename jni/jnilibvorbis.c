@@ -58,13 +58,15 @@ int Java_my_kotatsu_ndk_1practice5_Record_convertMONOtoSteJNI( JNIEnv* env, jobj
 	jbyte *input  =  (*env)->GetByteArrayElements(env,jinput,0);
 	jbyte *output  = (*env)->GetByteArrayElements(env,joutput,0);
     
-    //★データ変換
-    memcpy( output, input, jsize);
+	for( i=0; i<jsize/2; i++){
+		memcpy( output+i*4,   input+i*2, 2);
+		memcpy( output+i*4+2, input+i*2, 2);
+	}
     
 	(*env)->ReleaseByteArrayElements(env,jinput,input,0);
 	(*env)->ReleaseByteArrayElements(env,joutput,output,0);
     
-	return jsize;
+	return jsize*2;
 }
 
 int
